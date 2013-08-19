@@ -47,6 +47,9 @@ static UIColor *colorWithHexString(NSString *hexString);
 	id obj = [self.themeDictionary valueForKeyPath:key];
 	if (obj == nil && self.parentTheme != nil)
 		obj = [self.parentTheme objectForKey:key];
+
+    NSParameterAssert(obj != nil);
+
 	return obj;
 }
 
@@ -144,9 +147,11 @@ static UIColor *colorWithHexString(NSString *hexString);
 	UIFont *cachedFont = [self.fontCache objectForKey:key];
 	if (cachedFont != nil)
 		return cachedFont;
-    
-	NSString *fontName = [self stringForKey:key];
-	CGFloat fontSize = [self floatForKey:[key stringByAppendingString:@"Size"]];
+
+    NSArray *components = [[self stringForKey:key] componentsSeparatedByString:@","];
+
+    NSString *fontName = components[0];
+	CGFloat fontSize = [components[1] integerValue];
 
 	if (fontSize < 1.0f)
 		fontSize = 15.0f;
