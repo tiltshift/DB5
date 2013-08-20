@@ -48,7 +48,7 @@ static UIColor *colorWithHexString(NSString *hexString);
 	if (obj == nil && self.parentTheme != nil)
 		obj = [self.parentTheme objectForKey:key];
 
-    NSParameterAssert(obj != nil);
+    NSAssert1(obj != nil, @"Invalid theme key: \"%@\"", key);
 
 	return obj;
 }
